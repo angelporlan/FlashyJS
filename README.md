@@ -19,7 +19,7 @@ Una librería de notificaciones elegante y personalizable para JavaScript.
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/flashy.js@1.0.1/dist/flashy.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/pablotheblink/FlashyJS/flashy.js"></script>
 ```
 
 ### NPM
