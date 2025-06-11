@@ -32,7 +32,14 @@
       .code-block {
         background: #1a1a1a;
         border-radius: 12px;
-        overflow: hidden;
+        overflow-x: auto;
+        max-width: 100%;
+      }
+      .code-block pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin: 0;
+        padding: 1rem;
       }
       .hero-pattern {
         background-image: radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2px, transparent 0), radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.1) 2px, transparent 0);
@@ -63,6 +70,42 @@
           transform: translateY(0);
         }
       }
+      /* Mobile-specific styles */
+      .mobile-menu {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .desktop-menu {
+          display: none;
+        }
+        .mobile-menu {
+          display: block;
+        }
+        .mobile-menu-items {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 64px;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          padding: 1rem;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu-items.active {
+          display: flex;
+        }
+        /* Ensure tables are scrollable on mobile */
+        .responsive-table {
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        /* Adjust grid layouts for mobile */
+        .grid-cols-mobile {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body class="bg-gray-50 text-gray-900">
@@ -74,14 +117,28 @@
             <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
               <span class="text-white font-bold text-sm">F</span>
             </div>
-            <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> Flashy.js </span>
+            <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Flashy.js</span>
           </div>
-          <div class="hidden md:flex space-x-8">
+          <div class="desktop-menu hidden md:flex space-x-8">
             <a href="#inicio" class="text-gray-600 hover:text-primary transition-colors">Inicio</a>
             <a href="#instalacion" class="text-gray-600 hover:text-primary transition-colors">Instalación</a>
             <a href="#ejemplos" class="text-gray-600 hover:text-primary transition-colors">Ejemplos</a>
             <a href="#api" class="text-gray-600 hover:text-primary transition-colors">API</a>
             <a href="#generador" class="text-gray-600 hover:text-primary transition-colors">Generador</a>
+          </div>
+          <div class="mobile-menu md:hidden">
+            <button id="mobile-menu-toggle" class="text-gray-600 hover:text-primary">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+            <div id="mobile-menu-items" class="mobile-menu-items">
+              <a href="#inicio" class="text-gray-600 hover:text-primary py-2">Inicio</a>
+              <a href="#instalacion" class="text-gray-600 hover:text-primary py-2">Instalación</a>
+              <a href="#ejemplos" class="text-gray-600 hover:text-primary py-2">Ejemplos</a>
+              <a href="#api" class="text-gray-600 hover:text-primary py-2">API</a>
+              <a href="#generador" class="text-gray-600 hover:text-primary py-2">Generador</a>
+            </div>
           </div>
         </div>
       </div>
@@ -96,11 +153,11 @@
               <span class="text-4xl">🎉</span>
             </div>
           </div>
-          <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in">Flashy<span class="text-yellow-300">.js</span></h1>
-          <p class="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto fade-in">La librería de notificaciones más elegante y fácil de usar para JavaScript. Sin dependencias, completamente personalizable y lista para producción.</p>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 fade-in">Flashy<span class="text-yellow-3">.js</span></h1>
+          <p class="text-lg sm:text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto fade-in">La librería de notificaciones más elegante y fácil de usar para JavaScript. Sin dependencias, completamente personalizable y lista para producción.</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
-            <button onclick="demoNotification('success', '¡Bienvenido a Flashy.js!')" class="bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Ver Demo</button>
-            <a href="#instalacion" class="bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/30 transition-colors"> Comenzar </a>
+            <button onclick="demoNotification('success', '¡Bienvenido a Flashy.js!')" class="bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Ver Demo</button>
+            <a href="#instalacion" class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/30 transition-colors">Comenzar</a>
           </div>
         </div>
       </div>
@@ -113,7 +170,7 @@
           <h2 class="text-3xl font-bold mb-4">¿Por qué elegir Flashy.js?</h2>
           <p class="text-gray-600 max-w-2xl mx-auto">Diseñado para desarrolladores que buscan simplicidad sin sacrificar funcionalidad</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <div class="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 hover:shadow-lg transition-shadow">
             <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
               <span class="text-white text-xl">⚡</span>
@@ -146,8 +203,7 @@
           <h2 class="text-3xl font-bold mb-4">Instalación</h2>
           <p class="text-gray-600">Múltiples formas de integrar Flashy.js en tu proyecto</p>
         </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <!-- CDN -->
           <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
             <h3 class="text-lg font-semibold mb-4 flex items-center">
@@ -155,13 +211,12 @@
               Via CDN
             </h3>
             <div class="code-block">
-              <pre><code class="language-html">&lt;script src="https://cdn.jsdelivr.net/gh/pablotheblink/FlashyJS/flashy.js"&gt;&lt;/script&gt;
-&lt;script&gt;
+              <pre><code class="language-html"><script src="https://cdn.jsdelivr.net/gh/pablotheblink/FlashyJS/flashy.js"></script>
+<script>
   flashy('¡Hola mundo!', 'success');
-&lt;/script&gt;</code></pre>
+</script></code></pre>
             </div>
           </div>
-
           <!-- NPM -->
           <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
             <h3 class="text-lg font-semibold mb-4 flex items-center">
@@ -176,7 +231,6 @@
 flashy('¡Hola mundo!', 'success');</code></pre>
             </div>
           </div>
-
           <!-- Download -->
           <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
             <h3 class="text-lg font-semibold mb-4 flex items-center">
@@ -197,11 +251,10 @@ flashy('¡Hola mundo!', 'success');</code></pre>
           <h2 class="text-3xl font-bold mb-4">Ejemplos Interactivos</h2>
           <p class="text-gray-600">Prueba diferentes tipos de notificaciones</p>
         </div>
-
         <!-- Types Demo -->
         <div class="mb-12">
           <h3 class="text-2xl font-semibold mb-6">Tipos de Notificación</h3>
-          <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
             <button onclick="demoNotification('success', '¡Operación exitosa!')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg transition-colors">Success</button>
             <button onclick="demoNotification('error', 'Algo salió mal')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg transition-colors">Error</button>
             <button onclick="demoNotification('warning', 'Ten cuidado')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-lg transition-colors">Warning</button>
@@ -220,11 +273,10 @@ flashy('Mensaje', 'success');
 flashy('Mensaje', { type: 'error' });</code></pre>
           </div>
         </div>
-
         <!-- Positions Demo -->
         <div class="mb-12">
           <h3 class="text-2xl font-semibold mb-6">Posiciones</h3>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
             <button onclick="demoPosition('top-left')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-3 rounded-lg transition-colors">Top Left</button>
             <button onclick="demoPosition('top-center')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-3 rounded-lg transition-colors">Top Center</button>
             <button onclick="demoPosition('top-right')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-3 rounded-lg transition-colors">Top Right</button>
@@ -238,11 +290,10 @@ flashy('Mensaje', { type: 'error' });</code></pre>
 });                       // bottom-left, bottom-center, bottom-right</code></pre>
           </div>
         </div>
-
         <!-- Animations Demo -->
         <div class="mb-12">
           <h3 class="text-2xl font-semibold mb-6">Animaciones</h3>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
             <button onclick="demoAnimation('slide')" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg transition-colors">Slide</button>
             <button onclick="demoAnimation('fade')" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg transition-colors">Fade</button>
             <button onclick="demoAnimation('bounce')" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg transition-colors">Bounce</button>
@@ -254,7 +305,6 @@ flashy('Mensaje', { type: 'error' });</code></pre>
 });</code></pre>
           </div>
         </div>
-
         <!-- Themes Demo -->
         <div class="mb-12">
           <h3 class="text-2xl font-semibold mb-6">Temas</h3>
@@ -278,11 +328,10 @@ flashy('Mensaje', { type: 'error' });</code></pre>
           <h2 class="text-3xl font-bold mb-4">Documentación de la API</h2>
           <p class="text-gray-600">Referencia completa de métodos y opciones</p>
         </div>
-
         <!-- Main Method -->
-        <div class="bg-white rounded-xl p-8 shadow-sm mb-8">
+        <div class="bg-white rounded-xl p-4 sm:p-8 shadow-sm mb-8">
           <h3 class="text-2xl font-semibold mb-6">flashy(message, options)</h3>
-          <div class="grid md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             <div>
               <h4 class="text-lg font-semibold mb-4">Parámetros</h4>
               <div class="space-y-4">
@@ -307,84 +356,82 @@ flashy('Mensaje', { type: 'error' });</code></pre>
             </div>
           </div>
         </div>
-
         <!-- Options Table -->
-        <div class="bg-white rounded-xl p-8 shadow-sm mb-8">
+        <div class="bg-white rounded-xl p-4 sm:p-8 shadow-sm mb-8">
           <h3 class="text-2xl font-semibold mb-6">Opciones de Configuración</h3>
-          <div class="overflow-x-auto">
+          <div class="responsive-table">
             <table class="w-full text-left">
               <thead>
                 <tr class="border-b border-gray-200">
-                  <th class="pb-4 pr-6">Opción</th>
-                  <th class="pb-4 pr-6">Tipo</th>
-                  <th class="pb-4 pr-6">Por defecto</th>
-                  <th class="pb-4">Descripción</th>
+                  <th class="pb-4 pr-4 text-sm">Opción</th>
+                  <th class="pb-4 pr-4 text-sm">Tipo</th>
+                  <th class="pb-4 pr-4 text-sm">Por defecto</th>
+                  <th class="pb-4 text-sm">Descripción</th>
                 </tr>
               </thead>
               <tbody class="text-sm">
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">type</code></td>
-                  <td class="py-3 pr-6">string</td>
-                  <td class="py-3 pr-6">'default'</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">type</code></td>
+                  <td class="py-3 pr-4">string</td>
+                  <td class="py-3 pr-4">'default'</td>
                   <td class="py-3">success, error, warning, info, default</td>
                 </tr>
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">position</code></td>
-                  <td class="py-3 pr-6">string</td>
-                  <td class="py-3 pr-6">'top-right'</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">position</code></td>
+                  <td class="py-3 pr-4">string</td>
+                  <td class="py-3 pr-4">'top-right'</td>
                   <td class="py-3">top-left, top-center, top-right, bottom-left, bottom-center, bottom-right</td>
                 </tr>
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">duration</code></td>
-                  <td class="py-3 pr-6">number</td>
-                  <td class="py-3 pr-6">4000</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">duration</code></td>
+                  <td class="py-3 pr-4">number</td>
+                  <td class="py-3 pr-4">4000</td>
                   <td class="py-3">Duración en ms (0 = permanente)</td>
                 </tr>
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">closable</code></td>
-                  <td class="py-3 pr-6">boolean</td>
-                  <td class="py-3 pr-6">true</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">closable</code></td>
+                  <td class="py-3 pr-4">boolean</td>
+                  <td class="py-3 pr-4">true</td>
                   <td class="py-3">Mostrar botón de cerrar</td>
                 </tr>
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">animation</code></td>
-                  <td class="py-3 pr-6">string</td>
-                  <td class="py-3 pr-6">'slide'</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">animation</code></td>
+                  <td class="py-3 pr-4">string</td>
+                  <td class="py-3 pr-4">'slide'</td>
                   <td class="py-3">slide, fade, bounce, zoom</td>
                 </tr>
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">theme</code></td>
-                  <td class="py-3 pr-6">string</td>
-                  <td class="py-3 pr-6">'light'</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">theme</code></td>
+                  <td class="py-3 pr-4">string</td>
+                  <td class="py-3 pr-4">'light'</td>
                   <td class="py-3">light, dark</td>
                 </tr>
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">icon</code></td>
-                  <td class="py-3 pr-6">string</td>
-                  <td class="py-3 pr-6">null</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">icon</code></td>
+                  <td class="py-3 pr-4">string</td>
+                  <td class="py-3 pr-4">null</td>
                   <td class="py-3">Icono personalizado (HTML/emoji)</td>
                 </tr>
                 <tr class="border-b border-gray-100">
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">onClick</code></td>
-                  <td class="py-3 pr-6">function</td>
-                  <td class="py-3 pr-6">null</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">onClick</code></td>
+                  <td class="py-3 pr-4">function</td>
+                  <td class="py-3 pr-4">null</td>
                   <td class="py-3">Callback al hacer clic</td>
                 </tr>
                 <tr>
-                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">onClose</code></td>
-                  <td class="py-3 pr-6">function</td>
-                  <td class="py-3 pr-6">null</td>
+                  <td class="py-3 pr-4"><code class="bg-gray-100 px-2 py-1 rounded">onClose</code></td>
+                  <td class="py-3 pr-4">function</td>
+                  <td class="py-3 pr-4">null</td>
                   <td class="py-3">Callback al cerrar</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-
         <!-- Methods -->
-        <div class="bg-white rounded-xl p-8 shadow-sm">
+        <div class="bg-white rounded-xl p-4 sm:p-8 shadow-sm">
           <h3 class="text-2xl font-semibold mb-6">Métodos Disponibles</h3>
-          <div class="grid md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             <div class="space-y-6">
               <div>
                 <h4 class="font-semibold mb-2">Métodos de Conveniencia</h4>
@@ -439,22 +486,19 @@ flashy.destroy();</code></pre>
           <h2 class="text-3xl font-bold mb-4">Generador de Código</h2>
           <p class="text-gray-600">Configura tu notificación y obtén el código listo para usar</p>
         </div>
-
-        <div class="bg-gray-50 rounded-xl p-8">
-          <div class="grid lg:grid-cols-2 gap-8">
+        <div class="bg-gray-50 rounded-xl p-4 sm:p-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Configuration Form -->
-            <div class="space-y-6">
+            <div>
               <h3 class="text-xl font-semibold mb-4">Configuración</h3>
-
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium mb-2">Mensaje</label>
-                <input type="text" id="gen-message" value="¡Tu notificación personalizada!" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                <input type="text" id="gen-message" value="¡Tu notificación personalizada!" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
               </div>
-
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label class="block text-sm font-medium mb-2">Tipo</label>
-                  <select id="gen-type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <select id="gen-type" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                     <option value="default">Default</option>
                     <option value="success">Success</option>
                     <option value="error">Error</option>
@@ -464,7 +508,7 @@ flashy.destroy();</code></pre>
                 </div>
                 <div>
                   <label class="block text-sm font-medium mb-2">Posición</label>
-                  <select id="gen-position" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <select id="gen-position" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                     <option value="top-right">Top Right</option>
                     <option value="top-left">Top Left</option>
                     <option value="top-center">Top Center</option>
@@ -474,11 +518,10 @@ flashy.destroy();</code></pre>
                   </select>
                 </div>
               </div>
-
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label class="block text-sm font-medium mb-2">Animación</label>
-                  <select id="gen-animation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <select id="gen-animation" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                     <option value="slide">Slide</option>
                     <option value="fade">Fade</option>
                     <option value="bounce">Bounce</option>
@@ -487,37 +530,32 @@ flashy.destroy();</code></pre>
                 </div>
                 <div>
                   <label class="block text-sm font-medium mb-2">Tema</label>
-                  <select id="gen-theme" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <select id="gen-theme" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                     <option value="light">Light</option>
                     <option value="dark">Dark</option>
                   </select>
                 </div>
               </div>
-
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium mb-2">Duración (ms)</label>
-                <input type="number" id="gen-duration" value="4000" min="0" step="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                <input type="number" id="gen-duration" value="4000" min="0" step="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
                 <p class="text-xs text-gray-500 mt-1">0 = permanente</p>
               </div>
-
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium mb-2">Icono personalizado</label>
-                <input type="text" id="gen-icon" placeholder="🎉 o &lt;i class='fa fa-star'&gt;&lt;/i&gt;" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                <input type="text" id="gen-icon" placeholder="🎉 o <i class='fa fa-star'></i>" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
               </div>
-
-              <div class="flex items-center space-x-4">
+              <div class="mb-4">
                 <label class="flex items-center">
                   <input type="checkbox" id="gen-closable" checked class="mr-2" />
                   <span class="text-sm">Botón de cerrar</span>
                 </label>
               </div>
-
-              <div class="flex space-x-4">
-                <button onclick="generateCode()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors">Generar Código</button>
-                <button onclick="previewNotification()" class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-secondary/90 transition-colors">Vista Previa</button>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <button onclick="generateCode()" class="w-full sm:w-auto bg-primary text-white px-6 py-2 rounded-lg">Generar Código</button>
+                <button onclick="previewNotification()" class="w-full sm:w-auto bg-secondary text-white px-6 py-2 rounded-lg">Vista Previa</button>
               </div>
             </div>
-
             <!-- Generated Code -->
             <div>
               <h3 class="text-xl font-semibold mb-4">Código Generado</h3>
@@ -527,9 +565,8 @@ flashy.destroy();</code></pre>
                   <div class="code-block">
                     <pre><code id="generated-code-basic" class="language-javascript">flashy('¡Tu notificación personalizada!', 'success');</code></pre>
                   </div>
-                  <button onclick="copyCode('generated-code-basic')" class="mt-2 text-sm text-primary hover:text-primary/80 transition-colors">📋 Copiar código</button>
+                  <button onclick="copyCode('generated-code-basic')" class="mt-2 text-sm text-primary">📋 Copiar código</button>
                 </div>
-
                 <div>
                   <label class="block text-sm font-medium mb-2">Configuración completa</label>
                   <div class="code-block">
@@ -542,9 +579,8 @@ flashy.destroy();</code></pre>
   theme: 'light'
 });</code></pre>
                   </div>
-                  <button onclick="copyCode('generated-code-full')" class="mt-2 text-sm text-primary hover:text-primary/80 transition-colors">📋 Copiar código</button>
+                  <button onclick="copyCode('generated-code-full')" class="mt-2 text-sm text-primary">📋 Copiar código</button>
                 </div>
-
                 <div>
                   <label class="block text-sm font-medium mb-2">Con callbacks</label>
                   <div class="code-block">
@@ -560,7 +596,7 @@ flashy.destroy();</code></pre>
   }
 });</code></pre>
                   </div>
-                  <button onclick="copyCode('generated-code-callbacks')" class="mt-2 text-sm text-primary hover:text-primary/80 transition-colors">📋 Copiar código</button>
+                  <button onclick="copyCode('generated-code-callbacks')" class="mt-2 text-sm text-primary">📋 Copiar código</button>
                 </div>
               </div>
             </div>
@@ -580,7 +616,7 @@ flashy.destroy();</code></pre>
             <span class="text-2xl font-bold">Flashy.js</span>
           </div>
           <p class="text-gray-400 mb-6">La librería de notificaciones más elegante para JavaScript</p>
-          <div class="flex justify-center space-x-6 mb-8">
+          <div class="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8">
             <a href="#" class="text-gray-400 hover:text-white transition-colors">GitHub</a>
             <a href="#" class="text-gray-400 hover:text-white transition-colors">NPM</a>
             <a href="#" class="text-gray-400 hover:text-white transition-colors">Documentación</a>
@@ -594,14 +630,16 @@ flashy.destroy();</code></pre>
     </footer>
 
     <!-- Include Flashy.js for demos -->
-
     <script src="flashy.js"></script>
 
     <script>
-      // Aquí incluirías el código de flashy.js
-      // Para este ejemplo, simularemos las funciones
+      // Mobile menu toggle
+      document.getElementById("mobile-menu-toggle").addEventListener("click", () => {
+        const menu = document.getElementById("mobile-menu-items");
+        menu.classList.toggle("active");
+      });
 
-      // Métodos de conveniencia
+      // Convenience methods
       window.flashy.success = (msg, opts) => flashy(msg, { ...opts, type: "success" });
       window.flashy.error = (msg, opts) => flashy(msg, { ...opts, type: "error" });
       window.flashy.warning = (msg, opts) => flashy(msg, { ...opts, type: "warning" });
@@ -634,14 +672,14 @@ flashy.destroy();</code></pre>
         return icons[type] || icons.default;
       }
 
-      // Añadir estilos para animación
+      // Add styles for animation
       const style = document.createElement("style");
       style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-        `;
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+      `;
       document.head.appendChild(style);
 
       // Demo functions
@@ -654,34 +692,31 @@ flashy.destroy();</code></pre>
       }
 
       function demoPosition(position) {
-        // Simular diferentes posiciones
         const notification = document.createElement("div");
         notification.style.cssText = `
-                position: fixed;
-                background: #6366f1;
-                color: white;
-                padding: 16px 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 10000;
-                font-family: sans-serif;
-                font-size: 14px;
-                animation: fadeIn 0.3s ease-out;
-            `;
-
-        // Posicionar según el parámetro
+          position: fixed;
+          background: #6366f1;
+          color: white;
+          padding: 12px 16px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          z-index: 10000;
+          font-family: sans-serif;
+          font-size: 14px;
+          animation: fadeIn 0.3s ease-out;
+          max-width: calc(100% - 2rem);
+          margin: 0 1rem;
+        `;
         if (position.includes("top")) notification.style.top = "20px";
         if (position.includes("bottom")) notification.style.bottom = "20px";
-        if (position.includes("left")) notification.style.left = "20px";
-        if (position.includes("right")) notification.style.right = "20px";
+        if (position.includes("left")) notification.style.left = "1rem";
+        if (position.includes("right")) notification.style.right = "1rem";
         if (position.includes("center")) {
           notification.style.left = "50%";
           notification.style.transform = "translateX(-50%)";
         }
-
         notification.innerHTML = `Posición: ${position}`;
         document.body.appendChild(notification);
-
         setTimeout(() => notification.remove(), 3000);
       }
 
@@ -710,11 +745,9 @@ flashy.destroy();</code></pre>
         const icon = document.getElementById("gen-icon").value;
         const closable = document.getElementById("gen-closable").checked;
 
-        // Código básico
         let basicCode = `flashy('${message}', '${type}');`;
         document.getElementById("generated-code-basic").textContent = basicCode;
 
-        // Código completo
         let fullCode = `flashy('${message}', {\n`;
         fullCode += `  type: '${type}',\n`;
         fullCode += `  position: '${position}',\n`;
@@ -728,7 +761,6 @@ flashy.destroy();</code></pre>
         fullCode += `\n});`;
         document.getElementById("generated-code-full").textContent = fullCode;
 
-        // Código con callbacks
         let callbackCode = `flashy('${message}', {\n`;
         callbackCode += `  type: '${type}',\n`;
         callbackCode += `  position: '${position}',\n`;
@@ -742,7 +774,6 @@ flashy.destroy();</code></pre>
         callbackCode += `});`;
         document.getElementById("generated-code-callbacks").textContent = callbackCode;
 
-        // Re-highlight syntax
         if (window.Prism) {
           Prism.highlightAll();
         }
@@ -768,8 +799,6 @@ flashy.destroy();</code></pre>
         };
 
         if (icon) options.icon = icon;
-
-        // Para este demo, usamos flashy básico
         flashy(message, options);
       }
 
