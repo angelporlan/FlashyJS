@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashy.js - Librería de Notificaciones Elegante</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#6366f1",
+              secondary: "#8b5cf6",
+            },
+          },
+        },
+      };
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .glass-effect {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .code-block {
+        background: #1a1a1a;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .hero-pattern {
+        background-image: radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2px, transparent 0), radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.1) 2px, transparent 0);
+        background-size: 100px 100px;
+      }
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .fade-in {
+        animation: fadeIn 0.8s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900">
+    <!-- Header/Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-sm">F</span>
+            </div>
+            <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> Flashy.js </span>
+          </div>
+          <div class="hidden md:flex space-x-8">
+            <a href="#inicio" class="text-gray-600 hover:text-primary transition-colors">Inicio</a>
+            <a href="#instalacion" class="text-gray-600 hover:text-primary transition-colors">Instalación</a>
+            <a href="#ejemplos" class="text-gray-600 hover:text-primary transition-colors">Ejemplos</a>
+            <a href="#api" class="text-gray-600 hover:text-primary transition-colors">API</a>
+            <a href="#generador" class="text-gray-600 hover:text-primary transition-colors">Generador</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="pt-40 pb-16 gradient-bg hero-pattern text-white bg-primary/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <div class="floating">
+            <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-8">
+              <span class="text-4xl">🎉</span>
+            </div>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in">Flashy<span class="text-yellow-300">.js</span></h1>
+          <p class="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto fade-in">La librería de notificaciones más elegante y fácil de usar para JavaScript. Sin dependencias, completamente personalizable y lista para producción.</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
+            <button onclick="demoNotification('success', '¡Bienvenido a Flashy.js!')" class="bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Ver Demo</button>
+            <a href="#instalacion" class="bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/30 transition-colors"> Comenzar </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">¿Por qué elegir Flashy.js?</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Diseñado para desarrolladores que buscan simplicidad sin sacrificar funcionalidad</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <span class="text-white text-xl">⚡</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Ultra Ligero</h3>
+            <p class="text-gray-600">Solo ~8KB minificado. Sin dependencias externas.</p>
+          </div>
+          <div class="text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <span class="text-white text-xl">🎨</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Personalizable</h3>
+            <p class="text-gray-600">Temas, posiciones, animaciones y mucho más.</p>
+          </div>
+          <div class="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-violet-50 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <span class="text-white text-xl">📱</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Responsive</h3>
+            <p class="text-gray-600">Perfecto en desktop, tablet y móvil.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation -->
+    <section id="instalacion" class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Instalación</h2>
+          <p class="text-gray-600">Múltiples formas de integrar Flashy.js en tu proyecto</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- CDN -->
+          <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold mb-4 flex items-center">
+              <span class="w-6 h-6 bg-red-500 rounded mr-2 flex items-center justify-center text-white text-xs">1</span>
+              Via CDN
+            </h3>
+            <div class="code-block">
+              <pre><code class="language-html">&lt;script src="https://cdn.jsdelivr.net/npm/flashy-js@1.0.0/flashy.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  flashy('¡Hola mundo!', 'success');
+&lt;/script&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- NPM -->
+          <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold mb-4 flex items-center">
+              <span class="w-6 h-6 bg-green-500 rounded mr-2 flex items-center justify-center text-white text-xs">2</span>
+              Via NPM
+            </h3>
+            <div class="code-block">
+              <pre><code class="language-bash">npm install flashy-js</code></pre>
+            </div>
+            <div class="code-block mt-4">
+              <pre><code class="language-javascript">import flashy from 'flashy-js';
+flashy('¡Hola mundo!', 'success');</code></pre>
+            </div>
+          </div>
+
+          <!-- Download -->
+          <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold mb-4 flex items-center">
+              <span class="w-6 h-6 bg-blue-500 rounded mr-2 flex items-center justify-center text-white text-xs">3</span>
+              Descarga
+            </h3>
+            <p class="text-gray-600 mb-4">Descarga el archivo y úsalo localmente</p>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Descargar v1.0.0</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Examples -->
+    <section id="ejemplos" class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Ejemplos Interactivos</h2>
+          <p class="text-gray-600">Prueba diferentes tipos de notificaciones</p>
+        </div>
+
+        <!-- Types Demo -->
+        <div class="mb-12">
+          <h3 class="text-2xl font-semibold mb-6">Tipos de Notificación</h3>
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            <button onclick="demoNotification('success', '¡Operación exitosa!')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg transition-colors">Success</button>
+            <button onclick="demoNotification('error', 'Algo salió mal')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg transition-colors">Error</button>
+            <button onclick="demoNotification('warning', 'Ten cuidado')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-lg transition-colors">Warning</button>
+            <button onclick="demoNotification('info', 'Información útil')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg transition-colors">Info</button>
+            <button onclick="demoNotification('default', 'Mensaje general')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-3 rounded-lg transition-colors">Default</button>
+          </div>
+          <div class="code-block">
+            <pre><code class="language-javascript">// Diferentes formas de usar los tipos
+flashy.success('¡Operación exitosa!');
+flashy.error('Algo salió mal');
+flashy.warning('Ten cuidado');
+flashy.info('Información útil');
+
+// O usando el método principal
+flashy('Mensaje', 'success');
+flashy('Mensaje', { type: 'error' });</code></pre>
+          </div>
+        </div>
+
+        <!-- Positions Demo -->
+        <div class="mb-12">
+          <h3 class="text-2xl font-semibold mb-6">Posiciones</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            <button onclick="demoPosition('top-left')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-3 rounded-lg transition-colors">Top Left</button>
+            <button onclick="demoPosition('top-center')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-3 rounded-lg transition-colors">Top Center</button>
+            <button onclick="demoPosition('top-right')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-3 rounded-lg transition-colors">Top Right</button>
+            <button onclick="demoPosition('bottom-left')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors">Bottom Left</button>
+            <button onclick="demoPosition('bottom-center')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors">Bottom Center</button>
+            <button onclick="demoPosition('bottom-right')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors">Bottom Right</button>
+          </div>
+          <div class="code-block">
+            <pre><code class="language-javascript">flashy('Mensaje', { 
+  position: 'top-left'    // top-left, top-center, top-right
+});                       // bottom-left, bottom-center, bottom-right</code></pre>
+          </div>
+        </div>
+
+        <!-- Animations Demo -->
+        <div class="mb-12">
+          <h3 class="text-2xl font-semibold mb-6">Animaciones</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <button onclick="demoAnimation('slide')" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg transition-colors">Slide</button>
+            <button onclick="demoAnimation('fade')" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg transition-colors">Fade</button>
+            <button onclick="demoAnimation('bounce')" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg transition-colors">Bounce</button>
+            <button onclick="demoAnimation('zoom')" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg transition-colors">Zoom</button>
+          </div>
+          <div class="code-block">
+            <pre><code class="language-javascript">flashy('Mensaje', { 
+  animation: 'bounce'     // slide, fade, bounce, zoom
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Themes Demo -->
+        <div class="mb-12">
+          <h3 class="text-2xl font-semibold mb-6">Temas</h3>
+          <div class="grid grid-cols-2 gap-4 mb-8">
+            <button onclick="demoTheme('light')" class="bg-gray-200 hover:bg-gray-300 text-gray-900 px-4 py-3 rounded-lg transition-colors">Light Theme</button>
+            <button onclick="demoTheme('dark')" class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-3 rounded-lg transition-colors">Dark Theme</button>
+          </div>
+          <div class="code-block">
+            <pre><code class="language-javascript">flashy('Mensaje', { 
+  theme: 'dark'          // light, dark
+});</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Documentation -->
+    <section id="api" class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Documentación de la API</h2>
+          <p class="text-gray-600">Referencia completa de métodos y opciones</p>
+        </div>
+
+        <!-- Main Method -->
+        <div class="bg-white rounded-xl p-8 shadow-sm mb-8">
+          <h3 class="text-2xl font-semibold mb-6">flashy(message, options)</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Parámetros</h4>
+              <div class="space-y-4">
+                <div class="border-l-4 border-blue-500 pl-4">
+                  <code class="text-blue-600 font-mono">message</code>
+                  <span class="text-gray-500 ml-2">(string)</span>
+                  <p class="text-sm text-gray-600 mt-1">El texto de la notificación</p>
+                </div>
+                <div class="border-l-4 border-green-500 pl-4">
+                  <code class="text-green-600 font-mono">options</code>
+                  <span class="text-gray-500 ml-2">(object|string)</span>
+                  <p class="text-sm text-gray-600 mt-1">Configuración o tipo de notificación</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Valor de retorno</h4>
+              <div class="border-l-4 border-purple-500 pl-4">
+                <code class="text-purple-600 font-mono">function</code>
+                <p class="text-sm text-gray-600 mt-1">Función para cerrar la notificación manualmente</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Options Table -->
+        <div class="bg-white rounded-xl p-8 shadow-sm mb-8">
+          <h3 class="text-2xl font-semibold mb-6">Opciones de Configuración</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-gray-200">
+                  <th class="pb-4 pr-6">Opción</th>
+                  <th class="pb-4 pr-6">Tipo</th>
+                  <th class="pb-4 pr-6">Por defecto</th>
+                  <th class="pb-4">Descripción</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm">
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">type</code></td>
+                  <td class="py-3 pr-6">string</td>
+                  <td class="py-3 pr-6">'default'</td>
+                  <td class="py-3">success, error, warning, info, default</td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">position</code></td>
+                  <td class="py-3 pr-6">string</td>
+                  <td class="py-3 pr-6">'top-right'</td>
+                  <td class="py-3">top-left, top-center, top-right, bottom-left, bottom-center, bottom-right</td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">duration</code></td>
+                  <td class="py-3 pr-6">number</td>
+                  <td class="py-3 pr-6">4000</td>
+                  <td class="py-3">Duración en ms (0 = permanente)</td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">closable</code></td>
+                  <td class="py-3 pr-6">boolean</td>
+                  <td class="py-3 pr-6">true</td>
+                  <td class="py-3">Mostrar botón de cerrar</td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">animation</code></td>
+                  <td class="py-3 pr-6">string</td>
+                  <td class="py-3 pr-6">'slide'</td>
+                  <td class="py-3">slide, fade, bounce, zoom</td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">theme</code></td>
+                  <td class="py-3 pr-6">string</td>
+                  <td class="py-3 pr-6">'light'</td>
+                  <td class="py-3">light, dark</td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">icon</code></td>
+                  <td class="py-3 pr-6">string</td>
+                  <td class="py-3 pr-6">null</td>
+                  <td class="py-3">Icono personalizado (HTML/emoji)</td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">onClick</code></td>
+                  <td class="py-3 pr-6">function</td>
+                  <td class="py-3 pr-6">null</td>
+                  <td class="py-3">Callback al hacer clic</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-6"><code class="bg-gray-100 px-2 py-1 rounded">onClose</code></td>
+                  <td class="py-3 pr-6">function</td>
+                  <td class="py-3 pr-6">null</td>
+                  <td class="py-3">Callback al cerrar</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Methods -->
+        <div class="bg-white rounded-xl p-8 shadow-sm">
+          <h3 class="text-2xl font-semibold mb-6">Métodos Disponibles</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+              <div>
+                <h4 class="font-semibold mb-2">Métodos de Conveniencia</h4>
+                <div class="code-block">
+                  <pre><code class="language-javascript">flashy.success(message, options)
+flashy.error(message, options)  
+flashy.warning(message, options)
+flashy.info(message, options)</code></pre>
+                </div>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-2">Configuración Global</h4>
+                <div class="code-block">
+                  <pre><code class="language-javascript">flashy.setDefaults({
+  duration: 5000,
+  position: 'bottom-right'
+});
+
+flashy.getDefaults();</code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-6">
+              <div>
+                <h4 class="font-semibold mb-2">Control de Notificaciones</h4>
+                <div class="code-block">
+                  <pre><code class="language-javascript">// Cerrar todas
+flashy.closeAll();
+
+// Cerrar específica
+const close = flashy('Mensaje');
+close();</code></pre>
+                </div>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-2">Limpieza</h4>
+                <div class="code-block">
+                  <pre><code class="language-javascript">// Limpiar todo
+flashy.destroy();</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Generator -->
+    <section id="generador" class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">Generador de Código</h2>
+          <p class="text-gray-600">Configura tu notificación y obtén el código listo para usar</p>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-8">
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Configuration Form -->
+            <div class="space-y-6">
+              <h3 class="text-xl font-semibold mb-4">Configuración</h3>
+
+              <div>
+                <label class="block text-sm font-medium mb-2">Mensaje</label>
+                <input type="text" id="gen-message" value="¡Tu notificación personalizada!" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Tipo</label>
+                  <select id="gen-type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="default">Default</option>
+                    <option value="success">Success</option>
+                    <option value="error">Error</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">Posición</label>
+                  <select id="gen-position" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="top-right">Top Right</option>
+                    <option value="top-left">Top Left</option>
+                    <option value="top-center">Top Center</option>
+                    <option value="bottom-right">Bottom Right</option>
+                    <option value="bottom-left">Bottom Left</option>
+                    <option value="bottom-center">Bottom Center</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Animación</label>
+                  <select id="gen-animation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="slide">Slide</option>
+                    <option value="fade">Fade</option>
+                    <option value="bounce">Bounce</option>
+                    <option value="zoom">Zoom</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">Tema</label>
+                  <select id="gen-theme" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-2">Duración (ms)</label>
+                <input type="number" id="gen-duration" value="4000" min="0" step="100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                <p class="text-xs text-gray-500 mt-1">0 = permanente</p>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium mb-2">Icono personalizado</label>
+                <input type="text" id="gen-icon" placeholder="🎉 o &lt;i class='fa fa-star'&gt;&lt;/i&gt;" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+              </div>
+
+              <div class="flex items-center space-x-4">
+                <label class="flex items-center">
+                  <input type="checkbox" id="gen-closable" checked class="mr-2" />
+                  <span class="text-sm">Botón de cerrar</span>
+                </label>
+              </div>
+
+              <div class="flex space-x-4">
+                <button onclick="generateCode()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors">Generar Código</button>
+                <button onclick="previewNotification()" class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-secondary/90 transition-colors">Vista Previa</button>
+              </div>
+            </div>
+
+            <!-- Generated Code -->
+            <div>
+              <h3 class="text-xl font-semibold mb-4">Código Generado</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Método básico</label>
+                  <div class="code-block">
+                    <pre><code id="generated-code-basic" class="language-javascript">flashy('¡Tu notificación personalizada!', 'success');</code></pre>
+                  </div>
+                  <button onclick="copyCode('generated-code-basic')" class="mt-2 text-sm text-primary hover:text-primary/80 transition-colors">📋 Copiar código</button>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium mb-2">Configuración completa</label>
+                  <div class="code-block">
+                    <pre><code id="generated-code-full" class="language-javascript">flashy('¡Tu notificación personalizada!', {
+  type: 'success',
+  position: 'top-right',
+  duration: 4000,
+  closable: true,
+  animation: 'slide',
+  theme: 'light'
+});</code></pre>
+                  </div>
+                  <button onclick="copyCode('generated-code-full')" class="mt-2 text-sm text-primary hover:text-primary/80 transition-colors">📋 Copiar código</button>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium mb-2">Con callbacks</label>
+                  <div class="code-block">
+                    <pre><code id="generated-code-callbacks" class="language-javascript">flashy('¡Tu notificación personalizada!', {
+  type: 'success',
+  position: 'top-right',
+  duration: 4000,
+  onClick: () => {
+    console.log('Notificación clickeada');
+  },
+  onClose: () => {
+    console.log('Notificación cerrada');
+  }
+});</code></pre>
+                  </div>
+                  <button onclick="copyCode('generated-code-callbacks')" class="mt-2 text-sm text-primary hover:text-primary/80 transition-colors">📋 Copiar código</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <div class="flex items-center justify-center space-x-2 mb-4">
+            <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-sm">F</span>
+            </div>
+            <span class="text-2xl font-bold">Flashy.js</span>
+          </div>
+          <p class="text-gray-400 mb-6">La librería de notificaciones más elegante para JavaScript</p>
+          <div class="flex justify-center space-x-6 mb-8">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">GitHub</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">NPM</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Documentación</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Ejemplos</a>
+          </div>
+          <div class="border-t border-gray-800 pt-8">
+            <p class="text-gray-500 text-sm">© 2024 Flashy.js v1.0.0 - Licencia MIT</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Include Flashy.js for demos -->
+
+    <script src="flashy.js"></script>
+
+    <script>
+      // Aquí incluirías el código de flashy.js
+      // Para este ejemplo, simularemos las funciones
+
+      // Métodos de conveniencia
+      window.flashy.success = (msg, opts) => flashy(msg, { ...opts, type: "success" });
+      window.flashy.error = (msg, opts) => flashy(msg, { ...opts, type: "error" });
+      window.flashy.warning = (msg, opts) => flashy(msg, { ...opts, type: "warning" });
+      window.flashy.info = (msg, opts) => flashy(msg, { ...opts, type: "info" });
+      window.flashy.closeAll = () => {
+        document.querySelectorAll('[style*="position: fixed"]').forEach((el) => {
+          if (el.style.zIndex === "10000") el.remove();
+        });
+      };
+
+      function getTypeColor(type) {
+        const colors = {
+          success: "#10b981",
+          error: "#ef4444",
+          warning: "#f59e0b",
+          info: "#3b82f6",
+          default: "#6b7280",
+        };
+        return colors[type] || colors.default;
+      }
+
+      function getTypeIcon(type) {
+        const icons = {
+          success: "✅",
+          error: "❌",
+          warning: "⚠️",
+          info: "ℹ️",
+          default: "💬",
+        };
+        return icons[type] || icons.default;
+      }
+
+      // Añadir estilos para animación
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Demo functions
+      function demoNotification(type, message) {
+        if (type === "success") flashy.success(message);
+        else if (type === "error") flashy.error(message);
+        else if (type === "warning") flashy.warning(message);
+        else if (type === "info") flashy.info(message);
+        else flashy(message, type);
+      }
+
+      function demoPosition(position) {
+        // Simular diferentes posiciones
+        const notification = document.createElement("div");
+        notification.style.cssText = `
+                position: fixed;
+                background: #6366f1;
+                color: white;
+                padding: 16px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-family: sans-serif;
+                font-size: 14px;
+                animation: fadeIn 0.3s ease-out;
+            `;
+
+        // Posicionar según el parámetro
+        if (position.includes("top")) notification.style.top = "20px";
+        if (position.includes("bottom")) notification.style.bottom = "20px";
+        if (position.includes("left")) notification.style.left = "20px";
+        if (position.includes("right")) notification.style.right = "20px";
+        if (position.includes("center")) {
+          notification.style.left = "50%";
+          notification.style.transform = "translateX(-50%)";
+        }
+
+        notification.innerHTML = `Posición: ${position}`;
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.remove(), 3000);
+      }
+
+      function demoAnimation(animation) {
+        flashy(`Animación: ${animation}`, {
+          type: "info",
+          animation: animation,
+        });
+      }
+
+      function demoTheme(theme) {
+        flashy(`Tema: ${theme}`, {
+          type: "default",
+          theme: theme,
+        });
+      }
+
+      // Code generator functions
+      function generateCode() {
+        const message = document.getElementById("gen-message").value;
+        const type = document.getElementById("gen-type").value;
+        const position = document.getElementById("gen-position").value;
+        const animation = document.getElementById("gen-animation").value;
+        const theme = document.getElementById("gen-theme").value;
+        const duration = document.getElementById("gen-duration").value;
+        const icon = document.getElementById("gen-icon").value;
+        const closable = document.getElementById("gen-closable").checked;
+
+        // Código básico
+        let basicCode = `flashy('${message}', '${type}');`;
+        document.getElementById("generated-code-basic").textContent = basicCode;
+
+        // Código completo
+        let fullCode = `flashy('${message}', {\n`;
+        fullCode += `  type: '${type}',\n`;
+        fullCode += `  position: '${position}',\n`;
+        fullCode += `  duration: ${duration},\n`;
+        fullCode += `  closable: ${closable},\n`;
+        fullCode += `  animation: '${animation}',\n`;
+        fullCode += `  theme: '${theme}'`;
+        if (icon) {
+          fullCode += `,\n  icon: '${icon}'`;
+        }
+        fullCode += `\n});`;
+        document.getElementById("generated-code-full").textContent = fullCode;
+
+        // Código con callbacks
+        let callbackCode = `flashy('${message}', {\n`;
+        callbackCode += `  type: '${type}',\n`;
+        callbackCode += `  position: '${position}',\n`;
+        callbackCode += `  duration: ${duration},\n`;
+        callbackCode += `  onClick: () => {\n`;
+        callbackCode += `    console.log('Notificación clickeada');\n`;
+        callbackCode += `  },\n`;
+        callbackCode += `  onClose: () => {\n`;
+        callbackCode += `    console.log('Notificación cerrada');\n`;
+        callbackCode += `  }\n`;
+        callbackCode += `});`;
+        document.getElementById("generated-code-callbacks").textContent = callbackCode;
+
+        // Re-highlight syntax
+        if (window.Prism) {
+          Prism.highlightAll();
+        }
+      }
+
+      function previewNotification() {
+        const message = document.getElementById("gen-message").value;
+        const type = document.getElementById("gen-type").value;
+        const position = document.getElementById("gen-position").value;
+        const animation = document.getElementById("gen-animation").value;
+        const theme = document.getElementById("gen-theme").value;
+        const duration = parseInt(document.getElementById("gen-duration").value);
+        const icon = document.getElementById("gen-icon").value;
+        const closable = document.getElementById("gen-closable").checked;
+
+        const options = {
+          type,
+          position,
+          animation,
+          theme,
+          duration,
+          closable,
+        };
+
+        if (icon) options.icon = icon;
+
+        // Para este demo, usamos flashy básico
+        flashy(message, options);
+      }
+
+      function copyCode(elementId) {
+        const code = document.getElementById(elementId).textContent;
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            flashy.success("Código copiado al portapapeles");
+          })
+          .catch(() => {
+            flashy.error("Error al copiar el código");
+          });
+      }
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Initialize code generator on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        generateCode();
+      });
+    </script>
+  </body>
+</html>
