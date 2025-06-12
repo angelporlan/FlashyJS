@@ -142,6 +142,10 @@ MIT License - Ver el archivo LICENSE para más detalles.
 
 Pablo Martínez
 
+## Contribuidores 🤝
+
+- Ángel Porlán
+
 ## Versión 📌
 
-1.0.1
+1.0.2
