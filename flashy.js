@@ -1,4 +1,4 @@
-/**
+/*
  * Flashy.js - Librería de Notificaciones
  * @version 1.0.1
  * @author Pablo Martínez
@@ -18,7 +18,7 @@
   const defaults = {
     type: "default",
     position: "top-right",
-    duration: 4000,
+    duration: 4000, 
     closable: true,
     animation: "slide",
     theme: "light",
@@ -280,30 +280,13 @@
         });
       }
     }
-
     if (config.duration > 0) {
-      const progressBar = notification.querySelector(".flashy-progress");
-      if (progressBar) {
-        progressBar.style.width = "100%";
-        progressBar.style.transition = `width ${config.duration}ms linear`;
-        setTimeout(() => {
-          progressBar.style.width = "0%";
-        }, 10);
-      }
       setTimeout(() => {
         closeNotification(notification, config);
       }, config.duration);
     }
     return () => closeNotification(notification, config);
-  }
-
-  flashy.closeAll = function () {
-    if (typeof document === "undefined") return;
-    const notifications = document.querySelectorAll(".flashy-notification");
-    notifications.forEach((notification) => {
-      closeNotification(notification, {});
-    });
-  };
+  };  
 
   flashy.setDefaults = function (newDefaults) {
     if (typeof newDefaults === "object" && newDefaults !== null) {
@@ -338,7 +321,7 @@
   flashy.warning = (message, options = {}) => flashy(message, { ...options, type: "warning" });
   flashy.info = (message, options = {}) => flashy(message, { ...options, type: "info" });
 
-  flashy.version = "1.0.1";
+  flashy.version = "1.0.2";
 
   return flashy;
 });
