@@ -631,7 +631,7 @@ flashy.destroy();</code></pre>
     </footer>
 
     <!-- Include Flashy.js for demos -->
-    <script src="flashy.js"></script>
+    <script src="flashy.js?v=1"></script>
 
     <script>
       // Mobile menu toggle
@@ -693,32 +693,10 @@ flashy.destroy();</code></pre>
       }
 
       function demoPosition(position) {
-        const notification = document.createElement("div");
-        notification.style.cssText = `
-          position: fixed;
-          background: #6366f1;
-          color: white;
-          padding: 12px 16px;
-          border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-          z-index: 10000;
-          font-family: sans-serif;
-          font-size: 14px;
-          animation: fadeIn 0.3s ease-out;
-          max-width: calc(100% - 2rem);
-          margin: 0 1rem;
-        `;
-        if (position.includes("top")) notification.style.top = "20px";
-        if (position.includes("bottom")) notification.style.bottom = "20px";
-        if (position.includes("left")) notification.style.left = "1rem";
-        if (position.includes("right")) notification.style.right = "1rem";
-        if (position.includes("center")) {
-          notification.style.left = "50%";
-          notification.style.transform = "translateX(-50%)";
-        }
-        notification.innerHTML = `Posición: ${position}`;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 3000);
+        flashy(`Posición: ${position}`, {
+          type: "info",
+          position: position,
+        });
       }
 
       function demoAnimation(animation) {
